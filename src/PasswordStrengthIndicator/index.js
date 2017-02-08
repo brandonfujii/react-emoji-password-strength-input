@@ -1,22 +1,11 @@
 import React, { Component, PropTypes } from 'react'
-import EmojiIndicator from '../EmojiIndicator'
+import EmojiIndicator from './EmojiIndicator'
+
+const propTypes = {
+  score: PropTypes.number.isRequired
+}
 
 class PasswordStrengthIndicator extends Component {
-  // constructor (props) {
-  //   super(props)
-  //   this.state = {
-  //     score: 0
-  //   }
-  // }
-
-  // componentWillReceiveProps (nextProps) {
-  //   if (this.props.password != nextProps.password) {
-  //     this.setState({
-  //       score: zxcvbn(nextProps.password).score
-  //     })
-  //   }
-  // }
-
   render () {
     return (
       <div className="password-strength-indicator">
@@ -26,8 +15,6 @@ class PasswordStrengthIndicator extends Component {
   }
 }
 
-PasswordStrengthIndicator.propTypes = {
-  score: PropTypes.number.isRequired
-}
+PasswordStrengthIndicator.propTypes = propTypes
 
 export default PasswordStrengthIndicator

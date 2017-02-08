@@ -9,7 +9,7 @@ const EmojiIndicator = ({ score }) => {
   )
 }
 
-function renderEmoji (score) {
+const renderEmoji = (score) => {
   switch (score) {
     case 0:
       return emojis.sad

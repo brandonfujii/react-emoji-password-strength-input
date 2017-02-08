@@ -4,10 +4,22 @@ import zxcvbn from 'zxcvbn'
 import PasswordStrengthIndicator from '../PasswordStrengthIndicator'
 import style from './style.sass'
 
-const COLORS = {
-  BAD: '#e74c3c',
-  GOOD: '#27ae60',
-  OK: '#f1c40f'
+const COLORS = { BAD: '#e74c3c', GOOD: '#27ae60', OK: '#f1c40f' }
+
+const defaultProps = {
+  secureTextEntry: true
+}
+
+const propTypes = {
+  password: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
+  title: PropTypes.string,
+  secureTextEntry: PropTypes.bool,
+  onChangeText: PropTypes.func,
+  onBlur: PropTypes.func,
+  onFocus: PropTypes.func,
+  onKeyDown: PropTypes.func,
+  onKeyUp: PropTypes.func
 }
 
 class PasswordInput extends Component {
@@ -16,6 +28,7 @@ class PasswordInput extends Component {
     this.state = {
       score: 0
     }
+    this.renderProgressColor = this.renderProgressColor.bind(this)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -37,6 +50,17 @@ class PasswordInput extends Component {
   }
 
   render () {
+    const {
+      secureTextEntry,
+      password,
+      placeholder,
+      onChangeText,
+      onBlur,
+      onFocus,
+      onKeyDown,
+      onKeyUp
+    } = this.props
+
     return (
       <div className='emoji-password-form-group' style={style}>
         <div className='emoji-password-input-container'>
@@ -46,12 +70,16 @@ class PasswordInput extends Component {
                 <td className="input-column">
                   <label className="emoji-password-input-label">{ this.props.title || 'Password' }</label>
                   <input className='emoji-password-input'
-                    type={ this.props.secureTextEntry ? 'password' : 'text' } 
-                    value={this.props.password || ''}
-                    onChange={(e) => this.props.onChangeText(e.target.value) }
-                    placeholder={ this.props.placeholder || 'Type your password...' } /> 
+                    type={ secureTextEntry ? 'password' : 'text' } 
+                    value={ password || ''}
+                    placeholder={ placeholder || 'Type your password...' }
+                    onChange={(e) => onChangeText(e.target.value)}
+                    onBlur={onBlur ? onBlur : null}
+                    onFocus={onFocus ? onFocus : null} 
+                    onKeyDown={onKeyDown ? onKeyDown : null}
+                    onKeyUp={onKeyUp ? onKeyUp : null} /> 
                 </td>
-                <td className="password-indicator-column" width="60">
+                <td className="password-indicator-column no-user-select" width="60">
                   <PasswordStrengthIndicator 
                     score={this.state.score} />
                 </td>
@@ -68,16 +96,7 @@ class PasswordInput extends Component {
   }
 }
 
-PasswordInput.defaultProps = {
-  secureTextEntry: true
-}
-
-PasswordInput.propTypes = {
-  password: PropTypes.string.isRequired,
-  onChangeText: PropTypes.func.isRequired,
-  placeholder: PropTypes.string,
-  title: PropTypes.string,
-  secureTextEntry: PropTypes.bool
-}
+PasswordInput.propTypes = propTypes
+PasswordInput.defaultProps = defaultProps
 
 export default PasswordInput
