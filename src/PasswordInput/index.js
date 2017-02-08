@@ -17,6 +17,9 @@ const propTypes = {
   secureTextEntry: PropTypes.bool,
   maxLen: PropTypes.number,
   onChangeText: PropTypes.func,
+  onChangeScore: PropTypes.func,
+  onSuccess: PropTypes.func,
+  onFailure: PropTypes.func,
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
   onKeyDown: PropTypes.func,
@@ -59,6 +62,8 @@ class PasswordInput extends Component {
       placeholder,
       onChangeText,
       onChangeScore,
+      onSuccess,
+      onFailure,
       onBlur,
       onFocus,
       onKeyDown,
@@ -88,7 +93,9 @@ class PasswordInput extends Component {
                 <td className="password-indicator-column no-user-select" width="60">
                   <PasswordStrengthIndicator 
                     score={this.state.score}
-                    onChangeScore={onChangeScore} />
+                    onChangeScore={onChangeScore}
+                    onSuccess={onSuccess}
+                    onFailure={onFailure} />
                 </td>
               </tr>
             </tbody>

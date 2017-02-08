@@ -13,6 +13,9 @@ class PasswordStrengthIndicator extends Component {
         prevScore: this.props.score, 
         nextScore: nextProps.score 
       })
+
+      if (nextProps.score === 4) this.props.onSuccess()
+      if (nextProps.score === 1 || nextProps.score === 0) this.props.onFailure()
     }
   }
 
