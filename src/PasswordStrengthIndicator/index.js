@@ -6,7 +6,17 @@ const propTypes = {
 }
 
 class PasswordStrengthIndicator extends Component {
-  render () {
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.score != this.props.score) {
+      this.props.onChangeScore({ 
+        prevScore: this.props.score, 
+        nextScore: nextProps.score 
+      })
+    }
+  }
+
+  render () { 
     return (
       <div className="password-strength-indicator">
         <EmojiIndicator score={this.props.score} />

@@ -15,6 +15,7 @@ const propTypes = {
   placeholder: PropTypes.string,
   title: PropTypes.string,
   secureTextEntry: PropTypes.bool,
+  maxLen: PropTypes.number,
   onChangeText: PropTypes.func,
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
@@ -52,9 +53,12 @@ class PasswordInput extends Component {
   render () {
     const {
       secureTextEntry,
+      maxLen,
       password,
+      title,
       placeholder,
       onChangeText,
+      onChangeScore,
       onBlur,
       onFocus,
       onKeyDown,
@@ -68,10 +72,12 @@ class PasswordInput extends Component {
             <tbody>
               <tr>
                 <td className="input-column">
-                  <label className="emoji-password-input-label">{ this.props.title || 'Password' }</label>
+
+                  <label className="emoji-password-input-label">{ title ? title.substring(0, 25) : 'Password' }</label>
                   <input className='emoji-password-input'
                     type={ secureTextEntry ? 'password' : 'text' } 
                     value={ password || ''}
+                    maxLength={maxLen || 50}
                     placeholder={ placeholder || 'Type your password...' }
                     onChange={(e) => onChangeText(e.target.value)}
                     onBlur={onBlur ? onBlur : null}
@@ -81,7 +87,8 @@ class PasswordInput extends Component {
                 </td>
                 <td className="password-indicator-column no-user-select" width="60">
                   <PasswordStrengthIndicator 
-                    score={this.state.score} />
+                    score={this.state.score}
+                    onChangeScore={onChangeScore} />
                 </td>
               </tr>
             </tbody>
